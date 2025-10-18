@@ -1,25 +1,25 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Trash2, Edit2, Check, X } from "lucide-react";
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Trash2, Edit2, Check, X } from "lucide-react"
 
 interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
+  id: number
+  text: string
+  completed: boolean
 }
 
 export default function TodoApp() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [inputValue, setInputValue] = useState("");
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editingText, setEditingText] = useState("");
+  const [todos, setTodos] = useState<Todo[]>([])
+  const [inputValue, setInputValue] = useState("")
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editingText, setEditingText] = useState("")
 
   const addTodo = () => {
     if (inputValue.trim()) {
@@ -30,50 +30,42 @@ export default function TodoApp() {
           text: inputValue.trim(),
           completed: false,
         },
-      ]);
-      setInputValue("");
+      ])
+      setInputValue("")
     }
-  };
+  }
 
   const deleteTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+    setTodos(todos.filter((todo) => todo.id !== id))
+  }
 
   const toggleComplete = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
+    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)))
+  }
 
   const startEditing = (id: number, text: string) => {
-    setEditingId(id);
-    setEditingText(text);
-  };
+    setEditingId(id)
+    setEditingText(text)
+  }
 
   const saveEdit = (id: number) => {
     if (editingText.trim()) {
-      setTodos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, text: editingText.trim() } : todo
-        )
-      );
-      setEditingId(null);
-      setEditingText("");
+      setTodos(todos.map((todo) => (todo.id === id ? { ...todo, text: editingText.trim() } : todo)))
+      setEditingId(null)
+      setEditingText("")
     }
-  };
+  }
 
   const cancelEdit = () => {
-    setEditingId(null);
-    setEditingText("");
-  };
+    setEditingId(null)
+    setEditingText("")
+  }
 
   const handleKeyPress = (e: React.KeyboardEvent, action: () => void) => {
     if (e.key === "Enter") {
-      action();
+      action()
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-background to-muted">
@@ -81,9 +73,7 @@ export default function TodoApp() {
       <header className="bg-primary text-primary-foreground py-6 px-4 shadow-lg">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold text-center">My Todo List</h1>
-          <p className="text-center text-sm mt-2 opacity-90">
-            Stay organized and productive
-          </p>
+          <p className="text-center text-sm mt-2 opacity-90">Stay organized and productive</p>
         </div>
       </header>
 
@@ -112,9 +102,7 @@ export default function TodoApp() {
             {todos.length === 0 ? (
               <Card>
                 <CardContent className="py-12">
-                  <p className="text-center text-muted-foreground">
-                    No tasks yet. Add one to get started!
-                  </p>
+                  <p className="text-center text-muted-foreground">No tasks yet. Add one to get started!</p>
                 </CardContent>
               </Card>
             ) : (
@@ -133,18 +121,14 @@ export default function TodoApp() {
                           type="text"
                           value={editingText}
                           onChange={(e) => setEditingText(e.target.value)}
-                          onKeyPress={(e) =>
-                            handleKeyPress(e, () => saveEdit(todo.id))
-                          }
+                          onKeyPress={(e) => handleKeyPress(e, () => saveEdit(todo.id))}
                           className="flex-1"
                           autoFocus
                         />
                       ) : (
                         <span
                           className={`flex-1 ${
-                            todo.completed
-                              ? "line-through text-muted-foreground"
-                              : "text-foreground"
+                            todo.completed ? "line-through text-muted-foreground" : "text-foreground"
                           }`}
                         >
                           {todo.text}
@@ -205,12 +189,8 @@ export default function TodoApp() {
               <CardContent className="py-4">
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Total tasks: {todos.length}</span>
-                  <span>
-                    Completed: {todos.filter((t) => t.completed).length}
-                  </span>
-                  <span>
-                    Remaining: {todos.filter((t) => !t.completed).length}
-                  </span>
+                  <span>Completed: {todos.filter((t) => t.completed).length}</span>
+                  <span>Remaining: {todos.filter((t) => !t.completed).length}</span>
                 </div>
               </CardContent>
             </Card>
@@ -226,5 +206,5 @@ export default function TodoApp() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
